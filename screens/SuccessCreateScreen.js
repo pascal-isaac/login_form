@@ -49,10 +49,9 @@ const styles = StyleSheet.create({
       txtTitle: {
         color: '#838383',
         textAlign:'center',
-        marginHorizontal: 80,
+        marginHorizontal: 60,
         fontSize: 24,
-        marginTop: 25,
+        marginTop: 35,
         marginBottom: 8,
-        fontWeight: 'bold'
     }
 });

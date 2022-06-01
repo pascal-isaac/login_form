@@ -1,9 +1,9 @@
 import React from "react"
-import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native"
+import { View, Text, StyleSheet, Image, TouchableOpacity, KeyboardAvoidingView } from "react-native"
 
 const HomeLoginScreen = ({navigation}) => {
     return (
-        <View style={{flex: 1}}>
+        <KeyboardAvoidingView style={{flex: 1}}>
             <View style={{ flex: 1.15, alignItems: 'center', justifyContent: 'center' }}>
                 <Image style={{ height: '100%', width: '100%', resizeMode:'contain'}} source={require('../assets/LogoHome.png')} />
             </View>
@@ -15,7 +15,7 @@ const HomeLoginScreen = ({navigation}) => {
                 <Text style={styles.btnSignup}>S'inscrire</Text>
               </TouchableOpacity>
             </View>
-        </View>
+        </KeyboardAvoidingView>
     )
 }
 

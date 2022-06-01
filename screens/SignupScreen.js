@@ -1,13 +1,8 @@
 import React, { useState } from "react"
-import { View, Text, StyleSheet, Image, TouchableOpacity, ScrollView } from "react-native"
+import { View, Text, StyleSheet, TouchableOpacity, ScrollView } from "react-native"
 
 import { TextInput } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/AntDesign';
-
-
-
-
-
 
 const SignupScreen = ({ navigation }) => {
     const [text, setText] = useState('');
@@ -65,184 +60,165 @@ const SignupScreen = ({ navigation }) => {
 
     const handleSubmit = () => {
         var emailValid = false;
-        if(email.length == 0){
+        if (email.length == 0) {
             setEmailValidError("Email requis");
-        }        
-        else if(email.length < 6){
+        }
+        else if (email.length < 6) {
             setEmailValidError("Email mini 6 caractères");
-        }      
-        else if(email.indexOf(' ') >= 0){        
-            setEmailValidError('Un email ne peut pas contenir un espace');                          
-        }    
-        else{
+        }
+        else if (email.indexOf(' ') >= 0) {
+            setEmailValidError('Un email ne peut pas contenir un espace');
+        }
+        else {
             setEmailValidError("")
             emailValid = true
         }
 
         var passwordValid = false;
-        if(password.length == 0){
+        if (password.length == 0) {
             setPasswordValidError("Mot de passe requis");
-        }        
-        else if(password.length < 6){
+        }
+        else if (password.length < 6) {
             setPasswordValidError("Le mot de passe doit avoir minimum 6 caractères");
-        }      
-        else if(password.indexOf(' ') >= 0){        
-            setPasswordValidError('Le mot de passe ne doit pas contenir d espace');                          
-        }    
-        else{
+        } else if ( confirmPassword != password) {
+            setConfirmPasswordValidError("Les deux mots de passe ne sont pas identique");
+        }else if (password.indexOf(' ') >= 0) {
+            setPasswordValidError('Le mot de passe ne doit pas contenir d espace');
+        }
+        else {
             setPasswordValidError("")
             passwordValid = true
-        }        
-    
-        if(emailValid && passwordValid){            
-            //alert('Email: ' + email + '\nPassword: ' + password); 
-            //setEmail("");
-            //setPassword("");
-            //setConfirmPassword("");
-            navigation.navigate('NextInscription')
-             //navigate('NextInscription');
-        }       
-      }
-
-
-    /*const handleConfirmPassword = () => {
-        if (confirmPassword == password && confirmPassword != 0) {
-            setConfirmPasswordValidError("Mots de passe identique")
-            setBorderColor('green');
-            setColor('green');
-        } else if (confirmPassword != password) {
-            setConfirmPasswordValidError("Les mots de passe ne sont pas identique")
-            setBorderColor('red');
-            setColor('red');
-        } else if (confirmPassword == 0 && password == 0) {
-            setConfirmPasswordValidError("")
-
         }
-    };*/
+
+        if (emailValid && passwordValid) {
+            setEmail("");
+            setPassword("");
+            setConfirmPassword("");
+            navigation.navigate('NextInscription')
+        }
+    }
 
     return (
         <ScrollView>
-        <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+            <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+                <Text style={styles.txtTitle}>Email</Text>
+                <TextInput
+                    style={{
+                        borderColor: borderColor,
+                        fontSize: 17,
+                        height: 50,
+                        width: 300,
+                        borderWidth: 2,
+                        paddingHorizontal: 15,
+                        marginTop: 5,
+                        backgroundColor: '#fff',
+                        borderRadius: 10,
+                        color: '#838383',
+                        shadowColor: 'black',
+                        shadowOffset: {
+                            width: 0,
+                            height: 5,
+                        },
+                        shadowOpacity: 0.25,
+                        shadowRadius: 6.84,
+                        elevation: 5
+                    }} placeholder="Entrez votre email"
+                    returnKeyType="next"
+                    autoCapitalize="none"
+                    value={email}
+                    onChangeText={value => {
+                        setEmail(value);
+                        handleValidEmail(value);
+                    }}
+                    onFocus={() => setBorderColor('blue')}
+                    theme={{ roundness: 10, colors: { primary: 'green', underlineColor: 'transparent' } }}
+                />
+                {emailValidError ? <Text style={{ color: 'red', marginTop: 5 }}>{emailValidError}</Text> : null}
+                <Text style={styles.txtTitle}>Mot de passe</Text>
+                <TextInput
+                    style={{
+                        borderColor: borderColor,
+                        fontSize: 17,
+                        height: 50,
+                        width: 300,
+                        borderWidth: 2,
+                        paddingHorizontal: 15,
+                        marginTop: 5,
+                        backgroundColor: '#fff',
+                        borderRadius: 10,
+                        color: '#838383',
+                        shadowColor: 'black',
+                        shadowOffset: {
+                            width: 0,
+                            height: 5,
+                        },
+                        shadowOpacity: 0.25,
+                        shadowRadius: 6.84,
+                        elevation: 5
+                    }}
+                    placeholder="Entrez votre mot de passe"
+                    secureTextEntry={passwordVisible}
+                    returnKeyType="next"
+                    autoCapitalize="none"
+                    value={password}
+                    onChangeText={value => {
+                        setPassword(value);
+                    }}
+                    onBlur={value => {
+                        handleValidPassword(value);
+                    }}
+                    onFocus={() => setBorderColor('blue')}
+                    right={<TextInput.Icon name={passwordVisible ? "eye" : "eye-off"} onPress={() => setPasswordVisible(!passwordVisible)} />}
+                    theme={{ roundness: 10, colors: { primary: 'green', underlineColor: 'transparent' } }}
+                />
 
-            <Text style={styles.txtTitle}>Email</Text>
-            <TextInput
-                style={{
-                    borderColor: borderColor,
-                    fontSize: 17,
-                    height: 50,
-                    width: 300,
-                    borderWidth: 2,
-                    paddingHorizontal: 15,
-                    marginTop: 5,
-                    backgroundColor: '#fff',
-                    borderRadius: 10,
-                    color: '#838383',
-                    shadowColor: 'black',
-                    shadowOffset: {
-                        width: 0,
-                        height: 5,
-                    },
-                    shadowOpacity: 0.25,
-                    shadowRadius: 6.84,
-                    elevation: 5
-                }} placeholder="Entrez votre email"
-                returnKeyType="next"
-                autoCapitalize="none"
-                value={email}
-                onChangeText={value => {
-                    setEmail(value);
-                    handleValidEmail(value);
-                }}
-                onFocus={() => setBorderColor('blue')}
-                theme={{ roundness: 10, colors: { primary: 'green', underlineColor: 'transparent' } }}
-            />
-            {emailValidError ? <Text style={{ color: 'red', marginTop: 5 }}>{emailValidError}</Text> : null}
-            <Text style={styles.txtTitle}>Mot de passe</Text>
-            <TextInput
-                style={{
-                    borderColor: borderColor,
-                    fontSize: 17,
-                    height: 50,
-                    width: 300,
-                    borderWidth: 2,
-                    paddingHorizontal: 15,
-                    marginTop: 5,
-                    backgroundColor: '#fff',
-                    borderRadius: 10,
-                    color: '#838383',
-                    shadowColor: 'black',
-                    shadowOffset: {
-                        width: 0,
-                        height: 5,
-                    },
-                    shadowOpacity: 0.25,
-                    shadowRadius: 6.84,
-                    elevation: 5
-                }}
-                placeholder="Entrez votre mot de passe"
-                secureTextEntry={passwordVisible}
-                returnKeyType="next"
-                autoCapitalize="none"
-                value={password}
-                onChangeText={value => {
-                    setPassword(value);
-                }}
-                onBlur={value => {
-                    handleValidPassword(value);
-                }}
-                onFocus={() => setBorderColor('blue')}
-                right={<TextInput.Icon name={passwordVisible ? "eye" : "eye-off"} onPress={() => setPasswordVisible(!passwordVisible)} />}
-                theme={{ roundness: 10, colors: { primary: 'green', underlineColor: 'transparent' } }}
-            />
+                {passwordValidError ? <Text style={{ color: color, marginTop: 5 }}>{passwordValidError}</Text> : null}
+                <Text style={styles.txtTitle}>Confirmation du mot de passe</Text>
+                <TextInput
+                    style={{
+                        borderColor: borderColor,
+                        fontSize: 17,
+                        height: 50,
+                        width: 300,
+                        borderWidth: 2,
+                        paddingHorizontal: 15,
+                        marginTop: 5,
+                        backgroundColor: '#fff',
+                        borderRadius: 10,
+                        color: '#838383',
+                        shadowColor: 'black',
+                        shadowOffset: {
+                            width: 0,
+                            height: 5,
+                        },
+                        shadowOpacity: 0.25,
+                        shadowRadius: 6.84,
+                        elevation: 5
+                    }}
+                    placeholder="Entrez votre mot de passe"
+                    secureTextEntry={passwordVisible}
+                    returnKeyType="next"
+                    autoCapitalize="none"
+                    value={confirmPassword}
+                    onChangeText={value => {
+                        setConfirmPassword(value);
+                        //handleConfirmPassword(value);
+                    }}
+                    onFocus={() => setBorderColor('blue')}
+                    right={<TextInput.Icon name={passwordVisible ? "eye" : "eye-off"} onPress={() => setPasswordVisible(!passwordVisible)} />}
+                    theme={{ roundness: 10, colors: { primary: 'green', underlineColor: 'transparent' } }}
+                />
 
-            {passwordValidError ? <Text style={{ color: color, marginTop: 5 }}>{passwordValidError}</Text> : null}
-            <Text style={styles.txtTitle}>Confirmation du mot de passe</Text>
-            <TextInput
-                style={{
-                    borderColor: borderColor,
-                    fontSize: 17,
-                    height: 50,
-                    width: 300,
-                    borderWidth: 2,
-                    paddingHorizontal: 15,
-                    marginTop: 5,
-                    backgroundColor: '#fff',
-                    borderRadius: 10,
-                    color: '#838383',
-                    shadowColor: 'black',
-                    shadowOffset: {
-                        width: 0,
-                        height: 5,
-                    },
-                    shadowOpacity: 0.25,
-                    shadowRadius: 6.84,
-                    elevation: 5
-                }}
-                placeholder="Entrez votre mot de passe"
-                secureTextEntry={passwordVisible}
-                returnKeyType="next"
-                autoCapitalize="none"
-                value={confirmPassword}
-                onChangeText={value => {
-                    setConfirmPassword(value);
-                    //handleConfirmPassword(value);
-                }}
-                onFocus={() => setBorderColor('blue')}
-                right={<TextInput.Icon name={passwordVisible ? "eye" : "eye-off"} onPress={() => setPasswordVisible(!passwordVisible)} />}
-                theme={{ roundness: 10, colors: { primary: 'green', underlineColor: 'transparent' } }}
-            />
+                {(confirmPassword == password && confirmPassword != 0) && <Text style={{ color: 'green', marginTop: 5 }}>Mots de passe identique</Text>}
+                {(confirmPassword != password) && <Text style={{ color: 'red', marginTop: 5 }}>Les mots de passe ne sont pas identique </Text>}
+                {(confirmPassword == 0 && password == 0) && <Text style={{ color: 'green', marginTop: 5 }}></Text>}
 
-            {(confirmPassword == password && confirmPassword != 0) && <Text style={{ color: 'green', marginTop: 5 }}>Mots de passe identique</Text>}
-            {(confirmPassword != password) && <Text style={{ color: 'red', marginTop: 5 }}>Les mots de passe ne sont pas identique </Text>}
-            {(confirmPassword == 0 && password == 0) && <Text style={{ color: 'green', marginTop: 5 }}></Text>}
 
-            {/*confirmPasswordValidError ? <Text style={{ color: color, marginTop: 5 }}>{confirmPasswordValidError} {password} {confirmPassword}</Text> : null */}
-
-                <TouchableOpacity onPress={() => {handleSubmit()}}>
+                <TouchableOpacity onPress={() => { handleSubmit() }}>
                     <Text style={styles.btnValidation}>Suivant       <Icon name="arrowright" size={30} /></Text>
                 </TouchableOpacity>
-                </View>
-                </ScrollView>
+            </View>
+        </ScrollView>
 
     )
 }

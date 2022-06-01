@@ -4,7 +4,6 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import HomeLoginScreen from "../screens/HomeLoginScreen";
 import LoginScreen from "../screens/LoginScreen";
 import SignupScreen from "../screens/SignupScreen";
-import Icon from 'react-native-vector-icons/AntDesign';
 import NextSignupScreen from "../screens/NextSignupScreen";
 import SuccessCreateScreen from "../screens/SuccessCreateScreen";
 
